@@ -1,39 +1,42 @@
-function jsonToTable(jsonData) {
-    const data = JSON.parse(jsonData);
-    let table = '<table>';
+import { getJsonData } from './live-service.js';
+import { getLogs } from './log-service.js';
+import { jsonToTable } from './utils.js';
 
-    // Create table header
-    table += '<tr>';
-    for (const key in data[0]) {
-        table += `<th>${key}</th>`;
-    }
-    table += '</tr>';
+document
+  .addEventListener('DOMContentLoaded', renderLiveTabContent);
 
-    // Create table rows
-    data.forEach(item => {
-        table += '<tr>';
-        for (const key in item) {
-            table += `<td>${item[key]}</td>`;
-        }
-        table += '</tr>';
-    });
+document
+  .querySelector('a[href="#live"]')
+  .addEventListener('click', renderLiveTabContent);
 
-    table += '</table>';
-    return table;
+async function renderLiveTabContent() {
+  const jsonData = await getJsonData();
+  const tableHTML = jsonToTable(jsonData);
+  document.querySelector('.content').innerHTML = tableHTML;
 }
 
-async function getJsonData() {
-    return await fetch('./data.json')
-        .then(response => response.json())
-        .then(data => JSON.stringify(data))
-        .catch(error => {
-            console.error('Error fetching JSON data:', error);
-            return '[]';
-        });
+document
+  .querySelector('a[href="#log"]')
+  .addEventListener('click', renderLogTabContent);
+
+async function renderLogTabContent() {
+  const log = await Log();
+  document.querySelector('.content').replaceChildren(log);
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const jsonData = await getJsonData();
-    const tableHTML = jsonToTable(jsonData);
-    document.getElementById('events').innerHTML = tableHTML;
-});
+async function Log() {
+  const logs = await getLogs();
+
+  const template = document.createElement('template');
+  template.innerHTML = `
+      ${logs.map(log => `
+          <div class="log-items">
+          <details>
+              <summary>${log}</summary>
+          </details>
+          </div>`
+      ).join('')}
+  `;
+
+    return template.content.cloneNode(true);
+}
