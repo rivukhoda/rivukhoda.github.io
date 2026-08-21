@@ -10,8 +10,8 @@ document
   .addEventListener('click', renderLiveTabContent);
 
 async function renderLiveTabContent() {
-  const liveTab = LiveTab();
-  document.querySelector('.content').replace(liveTab);
+  const liveTab = await LiveTab();
+  document.querySelector('.content').replaceChildren(liveTab);
 }
 
 // LOG TAB

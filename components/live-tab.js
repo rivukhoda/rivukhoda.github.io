@@ -4,7 +4,7 @@ export async function LiveTab() {
   const liveEvents = await getLiveEvents();
 
   const template = document.createElement('template');
-  template.innerHTML = liveEvents.map(event => {
+  template.innerHTML =
     `<table>
         <thead>
           <tr>
@@ -15,17 +15,16 @@ export async function LiveTab() {
           </tr>
         </thead>
         <tbody>
-          ${liveEvents.map(event => {
+          ${liveEvents.map(event =>
             `<tr>
               <td>${event.date}</td>
               <td>${event.venue}</td>
               <td>${event.city}</td>
               <td>${event.track}</td>
             </tr>`
-          }).join('')}
+          ).join('')}
         </tbody>
-      </table>`
-  });
+      </table>`;
 
   return template.content.cloneNode(true);
 }
