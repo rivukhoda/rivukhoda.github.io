@@ -28,3 +28,7 @@ body {
     flex-direction: column;
     gap: 0.5rem;
 }
+
+summary {
+    font-size: 1.1rem;
+}
