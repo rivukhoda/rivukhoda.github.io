@@ -22,6 +22,10 @@ body {
     gap: 0.5rem;
 }
 
+details {
+    margin-left: 1rem;
+}
+
 summary {
     font-size: 1.1rem;
 }

@@ -6,13 +6,11 @@ export async function LogTab() {
   const template = document.createElement('template');
   template.innerHTML = `
       ${logs.map(log => `
-          <div class="log-items">
-            <details>
-                <summary>${log.date}</summary>
-                <p>${log.note}</p>
-            </details>
-          </div>`
-      ).join('')}
+          <details>
+              <summary>${log.date}</summary>
+              <p>${log.note}</p>
+          </details>
+      `).join('')}
   `;
 
     return template.content.cloneNode(true);
