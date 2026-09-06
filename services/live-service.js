@@ -6,6 +6,6 @@ export async function getLiveEvents() {
     return await response.json()
   }
   catch (error) {
-    throw new Error('Malformed JSON', { cause: error });
+    throw new Error('Malformed JSON', { cause : error });
   }
 }
